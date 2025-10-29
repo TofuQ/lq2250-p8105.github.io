@@ -1,0 +1,76 @@
+---
+title: "Plots From Instacart"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+library(dplyr)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Line plot ( order_hour_of_day ~ healthy_snacks)
+
+```{r}
+snack_df = instacart |>
+  select(aisle, department) |>
+  filter(department == "snacks") |>
+  select(-department) |>
+  group_by(aisle) |>
+  summarise(n_obs = n())
+
+healthy_snack_df = instacart |>
+  select(order_hour_of_day, aisle) |>
+  mutate(order_hour_of_day = as.factor(order_hour_of_day)) |>
+  filter(aisle %in% c("energy granola bars", "fruit vegetable snacks", "nuts seeds dried fruit")) |>
+  group_by(order_hour_of_day) |>
+  summarise(n_obs = n()) |>
+  ungroup()
+
+# make the plot 
+snack_time_plot = healthy_snack_df |>
+  plot_ly(x = ~order_hour_of_day, y = ~n_obs, type = "bar", colors = "virids")
+print(snack_time_plot)
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Scatter Plot (aisle ~ ordered times)
+
+```{r}
+aisle_ordered_plot = instacart |>
+  group_by(aisle) |>
+  summarize(n_obs = n()) |> 
+  filter(n_obs > 10000) |>  # Filter out aisles with more than 10000 items ordered
+  arrange(n_obs) |>
+  plot_ly(x = ~n_obs, y = ~aisle, color = ~aisle, type = "scatter", mode = "markers")
+
+print(aisle_ordered_plot)
+```
+
+### Box Plot (order_hour_of_day ~ user with different order frequency)
+
+```{r}
+freq_time_plot <- instacart |>
+  mutate(
+    reorder_frequency = case_when(
+      days_since_prior_order <= 3 ~ "High-Frequency",
+      days_since_prior_order > 3 & days_since_prior_order <= 7 ~ "Medium-Frequency",
+      days_since_prior_order > 7 ~ "Low-Frequency"
+    )
+  ) |>
+  plot_ly(x = ~reorder_frequency, y = ~order_hour_of_day, type = "box", colors = "virids")
+
+print(freq_time_plot)
+```
+

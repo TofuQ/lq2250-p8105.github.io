@@ -1,23 +1,19 @@
 ---
-title: "My awesome website"
+title: "Webisite for P8105 Homework4"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-# This is Lanlan's awesome website
+# This is Lanlan's hw4 website
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+This website is This is a website that showcases the results of assignments from [P8105 Homework4](https://p8105.com/homework_4.html)
 
-This website is an example coming from [P8105](https://p8105.com/index.html)
+I am struggling to make websites today...Learn more about this site [here](about.html)
 
-We're making websites today! Learn more about this site [here](about.html)
+I would also be glad if you also want to know about [me](resume.html) :)
 
-I also use [google](https://www.google.com/) a tan for data science.
+To show the flexdashboard I made from [instacart](https://p8105.com/dataset_instacart.html) dataset loaded from `p8105.datasets` package. Check out [this page](plots.html) for details.
 
-To show that you can just use RMD like normal, check out [this page](plots.html) with plots.
-
-Here's a picture of Cat:
-
-![](images/cat.jpg)
+![](images/image_1.png)

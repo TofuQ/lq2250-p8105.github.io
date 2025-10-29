@@ -1,0 +1,58 @@
+---
+title: "Resume"
+output: 
+  html_document:
+    theme: cerulean
+---
+## EDUCATION
+
+**Columbia University Irving Medical Center (CUIMC)**, New York, NY\n
+
+*M.S. in Biostatistics* (2024.09 - Present)\n
+
+**Georgia State University (GSU)**, Atlanta, GA\n
+
+*B.S. in Biological Science and Mathematics* (2022.07 - 2024.05) Institution GPA:
+4.20/4.3, Overall GPA: 3.88/4.3
+ - Honors: President’s List, Leadership Awards (2022, 2023), Silver & Golden Scholarship
+Awards
+
+**Southwest Jiaotong University (SWJTU)**, Chengdu, China\n
+*B.S. in Bioengineering* (2020.09 - 2024.06) GPA: 3.62/4.0
+
+
+## RESEARCH EXPERIENCE
+
+**Statistical Analysis of Wine Datasets**\n
+*Independent Research, GSU* (2023.07 - 2024.05)
+
+ - Applied parametric and non-parametric tests (ANOVA, Kruskal-Wallis) and linear
+regression in R to analyze wine data. Determined normality using statistical tests (K-S, Shapiro-Wilk) and Q-Q plots.
+
+ - Interpreted statistical significance and prepared a detailed report. 
+ 
+**Bioinformatic Study on Benzoate Degradation** in *G. daltonii*\n
+
+*Undergraduate Research Assistant, GSU* (2022.07 - 2023.06)
+ - Conducted protein modeling, domain analysis, and comparative genomics using various online servers.Used PyMol, AutoDock, Discovery Studio for protein-ligand interaction studies.
+ - Presented findings and contributed to a 23-page research paper. 
+ 
+## INTERNSHIP
+**Qitan Technology Co. Ltd.**, Chengdu, China\n
+
+*Summer Intern, Production Department* (2023.06 - 2023.07)
+
+ - Operated sequencing instruments, reducing error rates and enhancing accuracy.
+ - Analyzed large datasets, streamlined workflows, and optimized sequencing procedures.
+ 
+## SKILLS
+**Bioinformatics**: Protein Analysis (SWISS-MODEL, I-TASSER), Molecular Interactions (HADDOCK), Sequence Analysis (Clustal Omega)\n
+
+**Biological**: Cell Culture, Gene Expression, PCR, qPCR, Western Blot\n
+
+**Programming**: R, Python
+
+## LEADERSHIP
+**Vice President, Biology Chinese Student Association, GSU** (2022.06 - 2024.05)
+ - Led the "Handbook" project and managed budgeting and event planning for the association
+

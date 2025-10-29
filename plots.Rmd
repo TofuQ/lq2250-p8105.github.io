@@ -1,32 +1,128 @@
 ---
-title: "Here are some plots"
+title: "Here are the codes for plots"
 output: 
   html_document:
     theme: cerulean
 ---
 
-We often make plots in data science.
-
-Here's the tidyverse.
+Here are the necessary packages.
 
 ```{r message = FALSE}
 library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+library(flexdashboard)
+library(dplyr)
+library(ggplot2)
+library(viridis)
 ```
 
-Here's a dataframe.
+Default Settings for Plot
+```{r}
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+options(ggplot2.continuous.colour = "virids",
+        ggplot2.continuous.fill = "virids")
+
+scale_colour_discrete = scale_colour_viridis_d()
+scale_fill_discrete = scale_fill_viridis_d()
+```
+
+I choose the dataset of `instacart`\n
+
+Load the dataset
+```{r}
+data("instacart")
+```
+
+1. We made three distinct plots here:
+
+ - Line plot ( order_hour_of_day ~ healthy_snacks)
+
+Learned from the summary results made by the author that *"Healthier snacks tends to be purchased earlier in the day"*, we want to verify if healthier snacks were indeed ordered more in the day.\n
+
+Firstly, we may wonder what kinds of healthy snack there are
+```{r}
+snack_df = instacart |>
+  select(aisle, department) |>
+  filter(department == "snacks") |>
+  select(-department) |>
+  group_by(aisle) |>
+  summarise(n_obs = n())
+
+print(healthy_snack_df)
+```
+
+From the result, `energy granola bars`, `fruit vegetable snacks`, `nuts seeds dried fruit` can be considered as healthy.
 
 ```{r}
-plot_df =
-  tibble(
-    x = rnorm(100, mean = 1, sd = 2),
-    y = 1 + 2 * x + rnorm(100)
-  )
+healthy_snack_df = instacart |>
+  select(order_hour_of_day, aisle) |>
+  mutate(order_hour_of_day = as.factor(order_hour_of_day)) |>
+  filter(aisle %in% c("energy granola bars", "fruit vegetable snacks", "nuts seeds dried fruit")) |>
+  group_by(order_hour_of_day) |>
+  summarise(n_obs = n()) |>
+  ungroup()
+
+# make the plot 
+snack_time_plot = healthy_snack_df |>
+  ggplot(aes(x = order_hour_of_day, y = n_obs,
+             fill = order_hour_of_day)) +
+  geom_col() +
+  labs(
+    title = "Healthy Snacks Ordered Times vs. Ordered Time",
+    x = "Hour of Day",
+    y = "Ordered Times"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+print(snack_time_plot)
 ```
 
-Here's a plot
+According to the picture, the curve tends to have the highest peak around 10am-2pm, the time when most healthy snacks are ordered. It should be consistent with the summary as earlier in a day.
+
+ - Scatter Plot (aisle ~ ordered times)
+
+Make a plot that shows the *number of items ordered in each aisle*. limiting to aisles with more than 10000 items ordered.
+
 ```{r}
-plot_df |>
-  ggplot(aes(x = x, y = y)) +
-  geom_point()
+aisle_ordered_plot = instacart |>
+  group_by(aisle) |>
+  summarize(n_obs = n()) |> 
+  filter(n_obs > 10000) |>  # Filter out aisles with more than 10000 items ordered
+  arrange(n_obs) |>
+  ggplot(aes(x = n_obs, y = aisle, color = aisle)) + 
+  geom_point() + 
+  labs(
+    title = "Items Ordered in Each Aisle ",
+    x = "Ordered Times",
+    y = "Aisle",
+    caption = "Data from the instacart dataset")  +
+   theme_bw() +
+   theme(legend.position = "none")
+
+print(aisle_ordered_plot)
 ```
 
+ - Box Plot (order_hour_of_day ~ user with different order frequency)
+
+We might be interested in customers' behaviors like what time did customers of different order frequency usually place their order.
+```{r}
+freq_time_plot <- instacart |>
+  mutate(
+    reorder_frequency = case_when(
+      days_since_prior_order <= 3 ~ "High-Frequency",
+      days_since_prior_order > 3 & days_since_prior_order <= 7 ~ "Medium-Frequency",
+      days_since_prior_order > 7 ~ "Low-Frequency"
+    )
+  ) |>
+  ggplot(aes(x = reorder_frequency, y = order_hour_of_day)) +
+  geom_boxplot(width = 0.6, alpha = 0.7) +
+  labs(
+    title = "Order Time Distribution by Reorder Frequency",
+    x = "Reorder Frequency",
+    y = "Order Time (Hour)") 
+
+print(freq_time_plot)
+
+```

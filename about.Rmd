@@ -5,6 +5,6 @@ output:
     theme: cerulean
 ---
 
-This website was coded by Lanlan Qing using RMarkdown to do all the hard work.
+This website was coded by Lanlan Qing using RMarkdown to show all the work for Homework4.
 
 Go back to the [homepage](index.html)
