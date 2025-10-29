@@ -39,6 +39,7 @@ healthy_snack_df = instacart |>
 # make the plot 
 snack_time_plot = healthy_snack_df |>
   plot_ly(x = ~order_hour_of_day, y = ~n_obs, type = "bar", colors = "virids")
+snack_time_plot
 ```
 
 Column {data-width=350}
@@ -53,7 +54,7 @@ aisle_ordered_plot = instacart |>
   filter(n_obs > 10000) |>  # Filter out aisles with more than 10000 items ordered
   arrange(n_obs) |>
   plot_ly(x = ~n_obs, y = ~aisle, color = ~aisle, type = "scatter", mode = "markers")
-
+aisle_ordered_plot
 ```
 
 ### Box Plot (order_hour_of_day ~ user with different order frequency)
@@ -69,6 +70,6 @@ freq_time_plot <- instacart |>
   ) |>
   plot_ly(x = ~reorder_frequency, y = ~order_hour_of_day, color = ~reorder_frequency, 
           type = "box", colors = "viridis")
-
+freq_time_plot
 ```
 
