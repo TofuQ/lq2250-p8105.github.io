@@ -11,7 +11,7 @@
 
 
 
-<title>Here are some plots</title>
+<title>Here are the codes for plots</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -251,13 +251,25 @@ $(document).ready(function () {
   <a href="about.html">About</a>
 </li>
 <li>
-  <a href="mailto:&lt;you@youremail.com&gt;">
+  <a href="index.html">Introduction</a>
+</li>
+<li>
+  <a href="resume.html">Resume</a>
+</li>
+<li>
+  <a href="plots.html">Code</a>
+</li>
+<li>
+  <a href="plotly_plots.html">Plots</a>
+</li>
+<li>
+  <a href="mailto:&lt;lq2250@cumc.columbia.edu&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="http://github.com/lq2250-p8105/">
+  <a href="https://github.com/TofuQ">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -271,25 +283,116 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Here are some plots</h1>
+<h1 class="title toc-ignore">Here are the codes for plots</h1>
 
 </div>
 
 
-<p>We often make plots in data science.</p>
-<p>Here’s the tidyverse.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<p>Here’s a dataframe.</p>
-<pre class="r"><code>plot_df =
-  tibble(
-    x = rnorm(100, mean = 1, sd = 2),
-    y = 1 + 2 * x + rnorm(100)
-  )</code></pre>
-<p>Here’s a plot</p>
-<pre class="r"><code>plot_df |&gt;
-  ggplot(aes(x = x, y = y)) +
-  geom_point()</code></pre>
-<p><img src="plots_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Here are the necessary packages.</p>
+<pre class="r"><code>library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+library(flexdashboard)
+library(dplyr)</code></pre>
+<p>Default Settings for Plot</p>
+<pre class="r"><code>theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))
+options(ggplot2.continuous.colour = &quot;virids&quot;,
+        ggplot2.continuous.fill = &quot;virids&quot;)
+
+scale_colour_discrete = scale_colour_viridis_d()
+scale_fill_discrete = scale_fill_viridis_d()</code></pre>
+<p>I choose the dataset of <code>instacart</code></p>
+<p>Load the dataset</p>
+<pre class="r"><code>data(&quot;instacart&quot;)</code></pre>
+<p>We made three distinct plots here:</p>
+<ul>
+<li>Line plot ( order_hour_of_day ~ healthy_snacks)</li>
+</ul>
+<p>Learned from the summary results made by the author that
+<em>“Healthier snacks tends to be purchased earlier in the day”</em>, we
+want to verify if healthier snacks were indeed ordered more in the
+day.</p>
+<p>Firstly, we may wonder what kinds of healthy snack there are</p>
+<pre class="r"><code>snack_df = instacart |&gt;
+  select(aisle, department) |&gt;
+  filter(department == &quot;snacks&quot;) |&gt;
+  select(-department) |&gt;
+  group_by(aisle) |&gt;
+  summarise(n_obs = n())</code></pre>
+<p>From the result, <code>energy granola bars</code>,
+<code>fruit vegetable snacks</code>, <code>nuts seeds dried fruit</code>
+can be considered as healthy.</p>
+<pre class="r"><code>healthy_snack_df = instacart |&gt;
+  select(order_hour_of_day, aisle) |&gt;
+  mutate(order_hour_of_day = as.factor(order_hour_of_day)) |&gt;
+  filter(aisle %in% c(&quot;energy granola bars&quot;, &quot;fruit vegetable snacks&quot;, &quot;nuts seeds dried fruit&quot;)) |&gt;
+  group_by(order_hour_of_day) |&gt;
+  summarise(n_obs = n()) |&gt;
+  ungroup()
+
+# make the plot 
+snack_time_plot = healthy_snack_df |&gt;
+  ggplot(aes(x = order_hour_of_day, y = n_obs,
+             fill = order_hour_of_day)) +
+  geom_col() +
+  labs(
+    title = &quot;Healthy Snacks Ordered Times vs. Ordered Time&quot;,
+    x = &quot;Hour of Day&quot;,
+    y = &quot;Ordered Times&quot;
+  ) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;)
+
+print(snack_time_plot)</code></pre>
+<p><img src="plots_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>According to the picture, the curve tends to have the highest peak
+around 10am-2pm, the time when most healthy snacks are ordered. It
+should be consistent with the summary as earlier in a day.</p>
+<ul>
+<li>Scatter Plot (aisle ~ ordered times)</li>
+</ul>
+<p>Make a plot that shows the <em>number of items ordered in each
+aisle</em>. limiting to aisles with more than 10000 items ordered.</p>
+<pre class="r"><code>aisle_ordered_plot = instacart |&gt;
+  group_by(aisle) |&gt;
+  summarize(n_obs = n()) |&gt; 
+  filter(n_obs &gt; 10000) |&gt;  # Filter out aisles with more than 10000 items ordered
+  arrange(n_obs) |&gt;
+  ggplot(aes(x = n_obs, y = aisle, color = aisle)) + 
+  geom_point() + 
+  labs(
+    title = &quot;Items Ordered in Each Aisle &quot;,
+    x = &quot;Ordered Times&quot;,
+    y = &quot;Aisle&quot;,
+    caption = &quot;Data from the instacart dataset&quot;)  +
+   theme_bw() +
+   theme(legend.position = &quot;none&quot;)
+
+print(aisle_ordered_plot)</code></pre>
+<p><img src="plots_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<ul>
+<li>Box Plot (order_hour_of_day ~ user with different order
+frequency)</li>
+</ul>
+<p>We might be interested in customers’ behaviors like what time did
+customers of different order frequency usually place their order.</p>
+<pre class="r"><code>freq_time_plot &lt;- instacart |&gt;
+  mutate(
+    reorder_frequency = case_when(
+      days_since_prior_order &lt;= 3 ~ &quot;High-Frequency&quot;,
+      days_since_prior_order &gt; 3 &amp; days_since_prior_order &lt;= 7 ~ &quot;Medium-Frequency&quot;,
+      days_since_prior_order &gt; 7 ~ &quot;Low-Frequency&quot;
+    )
+  ) |&gt;
+  ggplot(aes(x = reorder_frequency, y = order_hour_of_day)) +
+  geom_boxplot(width = 0.6, alpha = 0.7) +
+  labs(
+    title = &quot;Order Time Distribution by Reorder Frequency&quot;,
+    x = &quot;Reorder Frequency&quot;,
+    y = &quot;Order Time (Hour)&quot;) 
+
+print(freq_time_plot)</code></pre>
+<p><img src="plots_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 
 
 

@@ -33,7 +33,7 @@ Load the dataset
 data("instacart")
 ```
 
-1. We made three distinct plots here:
+We made three distinct plots here:
 
  - Line plot ( order_hour_of_day ~ healthy_snacks)
 
@@ -48,7 +48,6 @@ snack_df = instacart |>
   group_by(aisle) |>
   summarise(n_obs = n())
 
-print(healthy_snack_df)
 ```
 
 From the result, `energy granola bars`, `fruit vegetable snacks`, `nuts seeds dried fruit` can be considered as healthy.
