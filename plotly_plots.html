@@ -343,7 +343,8 @@ frequency)</h3>
       days_since_prior_order &gt; 7 ~ &quot;Low-Frequency&quot;
     )
   ) |&gt;
-  plot_ly(x = ~reorder_frequency, y = ~order_hour_of_day, type = &quot;box&quot;, colors = &quot;virids&quot;)
+  plot_ly(x = ~reorder_frequency, y = ~order_hour_of_day, color = ~reorder_frequency, 
+          type = &quot;box&quot;, colors = &quot;viridis&quot;)
 
 print(freq_time_plot)</code></pre>
 </div>

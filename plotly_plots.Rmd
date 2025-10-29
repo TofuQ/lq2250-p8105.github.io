@@ -12,6 +12,7 @@ library(tidyverse)
 library(p8105.datasets)
 library(plotly)
 library(dplyr)
+library(viridis)
 ```
 
 Column {data-width=650}
@@ -38,8 +39,6 @@ healthy_snack_df = instacart |>
 # make the plot 
 snack_time_plot = healthy_snack_df |>
   plot_ly(x = ~order_hour_of_day, y = ~n_obs, type = "bar", colors = "virids")
-print(snack_time_plot)
-
 ```
 
 Column {data-width=350}
@@ -55,7 +54,6 @@ aisle_ordered_plot = instacart |>
   arrange(n_obs) |>
   plot_ly(x = ~n_obs, y = ~aisle, color = ~aisle, type = "scatter", mode = "markers")
 
-print(aisle_ordered_plot)
 ```
 
 ### Box Plot (order_hour_of_day ~ user with different order frequency)
@@ -69,8 +67,8 @@ freq_time_plot <- instacart |>
       days_since_prior_order > 7 ~ "Low-Frequency"
     )
   ) |>
-  plot_ly(x = ~reorder_frequency, y = ~order_hour_of_day, type = "box", colors = "virids")
+  plot_ly(x = ~reorder_frequency, y = ~order_hour_of_day, color = ~reorder_frequency, 
+          type = "box", colors = "viridis")
 
-print(freq_time_plot)
 ```
 
