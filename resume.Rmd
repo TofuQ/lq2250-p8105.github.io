@@ -4,7 +4,7 @@ output:
   html_document:
     theme: cerulean
 ---
-## EDUCATION
+### EDUCATION
 
 **Columbia University Irving Medical Center (CUIMC)**, New York, NY\n
 
@@ -21,7 +21,7 @@ Awards
 *B.S. in Bioengineering* (2020.09 - 2024.06) GPA: 3.62/4.0
 
 
-## RESEARCH EXPERIENCE
+### RESEARCH EXPERIENCE
 
 **Statistical Analysis of Wine Datasets**\n
 *Independent Research, GSU* (2023.07 - 2024.05)
@@ -37,7 +37,7 @@ regression in R to analyze wine data. Determined normality using statistical tes
  - Conducted protein modeling, domain analysis, and comparative genomics using various online servers.Used PyMol, AutoDock, Discovery Studio for protein-ligand interaction studies.
  - Presented findings and contributed to a 23-page research paper. 
  
-## INTERNSHIP
+### INTERNSHIP
 **Qitan Technology Co. Ltd.**, Chengdu, China\n
 
 *Summer Intern, Production Department* (2023.06 - 2023.07)
@@ -45,14 +45,14 @@ regression in R to analyze wine data. Determined normality using statistical tes
  - Operated sequencing instruments, reducing error rates and enhancing accuracy.
  - Analyzed large datasets, streamlined workflows, and optimized sequencing procedures.
  
-## SKILLS
+### SKILLS
 **Bioinformatics**: Protein Analysis (SWISS-MODEL, I-TASSER), Molecular Interactions (HADDOCK), Sequence Analysis (Clustal Omega)\n
 
 **Biological**: Cell Culture, Gene Expression, PCR, qPCR, Western Blot\n
 
 **Programming**: R, Python
 
-## LEADERSHIP
+### LEADERSHIP
 **Vice President, Biology Chinese Student Association, GSU** (2022.06 - 2024.05)
  - Led the "Handbook" project and managed budgeting and event planning for the association
 

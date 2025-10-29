@@ -13,8 +13,7 @@ library(p8105.datasets)
 library(plotly)
 library(flexdashboard)
 library(dplyr)
-library(ggplot2)
-library(viridis)
+
 ```
 
 Default Settings for Plot
